@@ -7,13 +7,14 @@
 
 class PhoneBook{
 	private:
-	static const int maxContacts = 8;
 
-	Contact contacts[maxContacts];
+	int i;
+	Contact contacts[8];
 	int contactsCount;
 
 	public:
-	PhoneBook() : contactsCount(0) {}
+	PhoneBook();
+	~PhoneBook();
 
 	void addContacts();
 	void searchContacts();

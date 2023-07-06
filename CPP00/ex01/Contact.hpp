@@ -15,8 +15,11 @@ class Contact{
 	public:
 
     Contact();
-	void defContactInfo();
+	void defContactInfo(Contact &buffer);
 	void showContactInfo();
+	std::string getFirstName();
+	std::string getlastName();
+	std::string getnickName();
 };
 
 #endif

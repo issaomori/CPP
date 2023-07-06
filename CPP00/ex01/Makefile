@@ -1,25 +1,27 @@
-NAME = Phonebook
+NAME=	Phonebook
 
-CFLAGS =  -Wall -Wextra -Werror
-CC = c++
-SRCS = main.cpp\
-	   Phonebook.cpp\
-	   Contact.cpp
+SRCS=	Phonebook.cpp Contact.cpp main.cpp
+OBJS=	$(SRCS:.cpp=.o)
 
-OBJS = ${SRCS:.cpp=.o}
-all:        $(NAME)
+RM=		rm -rf
 
-$(NAME):    $(OBJS)
+CC=	c++
+FLAGS =		-Wall -Werror -Wextra -std=c++98 -pedantic-errors
 
-.c.o:
-			$(CC) $(CFLAGS) -c $< -o $(<:.cpp=.o)
+all:	$(NAME)
+
+$(NAME):	$(OBJS)
+	$(CC) $(FLAGS) $(OBJS) -o $(NAME)
+
+%.o: %.cpp
+	$(CC) $(FLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJS)
+	$(RM) $(OBJS)
 
 fclean: clean
-	rm -f $(NAME)
+	$(RM) $(NAME)
 
 re: fclean all
 
-.PHONY:	all clean fclean re
+.PHONY: all clean fclean re
