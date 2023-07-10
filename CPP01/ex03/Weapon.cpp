@@ -1,17 +1,19 @@
 #include "Weapon.hpp"
 
+Weapon::Weapon(){
+}
+
 Weapon::Weapon(std::string _private_str){
     this->setType(_private_str);
 }
 
-Weapon::~Weapon(){
-    std::cout << "Weapon destructor called" << std::endl;
+Weapon::~Weapon( void ){
 }
 
 const std::string &Weapon::getType( void ){
-    return (this->_private_str);
+    return (this->type);
 }
 
 void Weapon::setType(std::string newStr){
-    this->_private_str = newStr;
+    this->type = newStr;
 }
