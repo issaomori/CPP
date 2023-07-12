@@ -40,11 +40,11 @@ void Fixed::setRawBits(int const raw){
     fixed_number_point = raw;
 }
  
-float Fixed::toFloat( void ){
+float Fixed::toFloat( void ) const {
     return ((float) this->fixed_number_point / (1 << fractional_bits));
 }
 
-int Fixed::toInt( void ){
+int Fixed::toInt( void ) const {
     return fixed_number_point >> fractional_bits;
 }
 
