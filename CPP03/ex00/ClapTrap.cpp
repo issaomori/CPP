@@ -88,12 +88,15 @@ void ClapTrap::takeDamage(unsigned int amount){
     if (this->getHitPoints() == 0){
         std::cout << "ClapTrap " << this->getName() << " is dead" << std::endl;
         return;
-    }else
-        std::cout << "ClapTrap " << this->getName() << " takes " << amount << " damage" <<std::endl;
-    if(this->getAttackDamage() <= (int)amount)
-        this->setAttackDamage(0);
+    }else if (amount == 0)
+        std::cout << "ClapTrap " << this->getName() << " takes 0 damage" << std::endl;
     else
-    this->setAttackDamage(getAttackDamage() - amount);
+        std::cout << "ClapTrap " << this->getName() << 
+    " takes " << amount << " damage" <<std::endl;
+    if((int)amount >= getHitPoints())
+        this->setHitPoints(0);
+    else
+        this->setHitPoints(getHitPoints() - amount);
 }
 
 void ClapTrap::beRepaired(unsigned int amount){
@@ -101,13 +104,13 @@ void ClapTrap::beRepaired(unsigned int amount){
         std::cout << "ClapTrap " << this->getName() << " is dead" << std::endl;
         return;
     }else if (this->getEnergyPoints() < 1){
-        std::cout << "ClapTrap " << this->getName() << " It cannot be repaired because it has no energy" << std::endl;
+        std::cout << "ClapTrap " << this->getName() << " cannot be repaired because it has no energy" << std::endl;
         return;
-    }else{
+    }else
 
         std::cout << "ClapTrap " << this->getName() << " is repairing himself " << amount << " Hp"<< std::endl;
-        this->setHitPoints(this->getHitPoints() + amount);
-        this->setEnergyPoints(this->getEnergyPoints() -1);
-    }
+    if ( getHitPoints() > MAX_HP)
+        setHitPoints(MAX_HP);
+    this->setEnergyPoints(this->getEnergyPoints() -1);
 
 }

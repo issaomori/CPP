@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 
+#define MAX_HP 10
+
 class ClapTrap{
     private:
     std::string name;
