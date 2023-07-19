@@ -1,7 +1,7 @@
-NAME = Fixed
+NAME = ClapTrap
 
 SRCS=	main.cpp\
-		Fixed.cpp
+		ClapTrap.cpp
 
 OBJS=	$(SRCS:.cpp=.o)
 

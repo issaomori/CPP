@@ -19,6 +19,11 @@ ClapTrap::ClapTrap(ClapTrap const &name){
 
 ClapTrap &ClapTrap::operator=(ClapTrap const &name){
     std::cout << "ClapTrap Copy assignment operator called" << std::endl;
+    this->name = name.name;
+    this->hp = name.hp;
+    this->hit = name.hit;
+    this->stamina = name.stamina;
+    return *this;
 }
 
 std::string ClapTrap::getName(void) const{
@@ -41,43 +46,60 @@ void ClapTrap::setName(std::string name){
     this->name = name;
 }
 
-void ClapTrap::setHp(void) const{
+void ClapTrap::setHp(int hp) const{
     this->hp = hp;
 }
 
-void ClapTrap::setStamina(void) const{
+void ClapTrap::setStamina(int stamina) const{
     this->stamina = stamina;
 }
 
-void ClapTrap::setHit(void) const{
+void ClapTrap::setHit(int hit) const{
     this->hit = hit;
 }
 
-bool ClapTrap::isDead() const {
-    return getHp() == 0;
-}
-
-bool ClapTrap::isOutOfStamina() const {
-    return getStamina() == 0;
-}
-
-bool ClapTrap::decreaseStamina() const {
-    setStamina(getStamina() - 1) == 0;
-}
-
 void ClapTrap::attack(const std::string& target){
-    if(isDead())
-        std::cout << getName() << "cannot attack because he is dead" << std::endl;
-    else if (isOutOfStamina())
-        std::cout << getName() << "cannot attack because he is out of stamina" << std::endl;
+
+    if (target.empty()){
+        std::cout << "ClapTrap " << getName() << " Cannot attack because there is no target" << std::endl;
+        return;
+    }
+    if(this->getStamina() <= 0){
+        std::cout << "ClapTrap " << getName() << " Cannot attack because it has no stamina" << std::endl;
+        return;
+    }
+    else if (this->getHp() <= 0){
+        std::cout << "ClapTrap " << getName() << " Cannot attack because it has no hp" << std::endl;
+        return;
+    }
     else
-        std::cout << getName() << " attacks " << target << ", causing " << getHit() << " points of damage"<< std::endl;
-        decreaseStamina();
+        std::cout << "ClapTrap " << getName() << " attacks " << target << ", causing " << getHit() << " points of damage"<< std::endl;
+        this->stamina--;
 }
 
 void ClapTrap::takeDamage(unsigned int amount){
+    if (this->getHp() == 0){
+        std::cout << "ClapTrap " << this->getName() << " is dead" << std::endl;
+        return;
+    }else
+        std::cout << "ClapTrap " << this->getName() << " takes " << amount << " damage" <<std::endl;
+    if(this->getHit() <= amount)
+        this->getHit() = 0;
+    else
+    this->getHit() -= amount;
 }
 
 void ClapTrap::beRepaired(unsigned int amount){
-    
+    if (this->getHp() == 0){
+        std::cout << "ClapTrap " << this->getName() << " is dead" << std::endl;
+        return;
+    }else if (this->getStamina() < 1){
+        std::cout << "ClapTrap " << this->getName() << " It cannot be repaired because it has no energy" << std::endl;
+        return;
+    }else{
+
+        std::cout << "ClapTrap " << this->getName() << " is repairing himself " << amount << " Hp"<< std::endl;
+        this->setHp(this->getHp() + amount);
+        this->setStamina(this->getStamina() -1);
+    }
 }

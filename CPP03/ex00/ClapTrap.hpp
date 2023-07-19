@@ -24,13 +24,9 @@ class ClapTrap{
     int getHit(void) const;
 
     void setName(std::string name);
-    void setHp(void) const;
-    void setStamina(void) const;
-    void setHit(void) const;
-
-    bool ClapTrap::isDead() const;
-    bool ClapTrap::isOutOfStamina() const;
-    bool ClapTrap::decreaseStamina() const;
+    void setHp(int hp) const;
+    void setStamina(int stamina) const;
+    void setHit(int hit) const;
 
     void attack(const std::string& target);
     void takeDamage(unsigned int amount);
