@@ -92,8 +92,7 @@ void ClapTrap::takeDamage(unsigned int amount){
     // else if (amount == 0)
     //     std::cout << "ClapTrap " << this->getName() << " takes 0 damage" << std::endl;
     // else
-    //     std::cout << "ClapTrap " << this->getName() << 
-    // " takes " << amount << " damage" <<std::endl;
+    //     std::cout << "ClapTrap " << this->getName() << " takes " << amount << " damage" <<std::endl;
     std::cout << "ClapTrap " << getName() << " takes " << amount << " damage" << std::endl;
     if((int)amount >= getHitPoints())
         this->setHitPoints(0);
