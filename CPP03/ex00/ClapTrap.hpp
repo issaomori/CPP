@@ -2,13 +2,14 @@
 #define CLAPTRAP_HPP
 
 #include <iostream>
+#include <string>
 
 class ClapTrap{
     private:
     std::string name;
     int hp;
-    int stamina;
-    int hit;
+    int energy_points;
+    int attack_damage;
 
     public:
     ClapTrap(void);
@@ -19,18 +20,19 @@ class ClapTrap{
     ClapTrap &operator=(ClapTrap const &name);
 
     std::string getName(void) const;
-    int getHp(void) const;
-    int getStamina(void) const;
-    int getHit(void) const;
+    int getHitPoints(void) const;
+    int getEnergyPoints(void) const;
+    int getAttackDamage(void) const;
 
     void setName(std::string name);
-    void setHp(int hp) const;
-    void setStamina(int stamina) const;
-    void setHit(int hit) const;
+    void setHitPoints(int hp);
+    void setEnergyPoints(int energy_points);
+    void setAttackDamage(int attack);
 
     void attack(const std::string& target);
     void takeDamage(unsigned int amount);
     void beRepaired(unsigned int amount);
+
 
 };
 
