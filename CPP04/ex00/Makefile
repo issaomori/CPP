@@ -1,9 +1,7 @@
-NAME = FragTrap
+NAME = Polymorphism
 
 SRCS=	main.cpp\
-		ClapTrap.cpp\
-		ScavTrap.cpp\
-		FragTrap.cpp
+		Polymorphism.cpp\
 
 OBJS=	$(SRCS:.cpp=.o)
 
