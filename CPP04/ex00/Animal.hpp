@@ -12,6 +12,7 @@ class Animal{
         virtual ~Animal(void);
 
         Animal(const Animal &name);
+        Animal(std::string const type);
         Animal &operator=(const Animal &name);
 
         std::string getType(void) const;

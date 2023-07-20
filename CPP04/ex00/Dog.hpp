@@ -5,12 +5,12 @@
 
 class Dog : public Animal{
     public:
-    Dog(void);
-    ~Dog(void);
+        Dog(void);
+        ~Dog(void);
 
-    Dog(Dog const &name);
-    Dog &operator=(Dog const &name);
+        Dog(Dog const &name);
+        Dog &operator=(Dog const &name);
 
-    void makeSound(void) const;
+        void makeSound(void) const;
 };
 #endif

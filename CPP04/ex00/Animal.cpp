@@ -1,10 +1,10 @@
 #include "Animal.hpp"
 
-Animal::Animal(){
+Animal::Animal(void) : type("Animal"){
     std::cout << "Animal Default Constructor called" << std::endl;
 }
 
-Animal::~Animal(){
+Animal::~Animal(void){
     std::cout << "Animal Destructor called" << std::endl;
 }
 
@@ -13,9 +13,15 @@ Animal::Animal(const Animal &name){
     *this = name;
 }
 
+Animal::Animal(std::string const type){
+    std::cout << "Animal Constructor called " << type << std::endl;
+    this->setType(type);
+}
+
 Animal &Animal::operator=(const Animal &name){
     this->type = name.getType();
     std::cout << "Animal Copy Assignment Constructor called" << std::endl;
+    return *this;
 }
 
 std::string Animal::getType(void) const {
