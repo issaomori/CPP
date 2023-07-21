@@ -1,16 +1,11 @@
-#include "Animal.hpp"
+#include "AAnimal.hpp"
 #include "Cat.hpp"
 #include "Dog.hpp"
 #include "Brain.hpp"
 
-#include <iostream>
-#include "Animal.hpp"
-#include "Cat.hpp"
-#include "Dog.hpp"
-
 int main() {
-    const Animal* j = new Dog();
-    const Animal* i = new Cat();
+    const AAnimal* j = new Dog();
+    const AAnimal* i = new Cat();
 
     delete j; // should not create a leak
     delete i;
@@ -20,7 +15,7 @@ int main() {
         Dog tmp = basic;
     }
 
-    const Animal* animals[6] = { new Dog(), new Dog(), new Cat(), new Cat(), new Dog(), new Cat() };
+    const AAnimal* animals[6] = { new Dog(), new Dog(), new Cat(), new Cat(), new Dog(), new Cat() };
     for (int i = 0; i < 6; i++) {
         animals[i]->makeSound();
         delete animals[i];
@@ -28,8 +23,6 @@ int main() {
 
     Cat* cat = new Cat();
     cat->getBrain()->setIdea("Idea 1", 0);
-    std::cout << "aqui\n";
-    std::cout << "--------------------------------";
     cat->getBrain()->setIdea("Idea 2", 1);
 
     Cat* cat2 = new Cat();

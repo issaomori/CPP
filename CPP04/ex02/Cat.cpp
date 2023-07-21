@@ -1,6 +1,6 @@
 #include "Cat.hpp"
 
-Cat::Cat(void) : Animal("Cat"){
+Cat::Cat(void) : AAnimal("Cat"){
     std::cout << "Default Cat constructor called" << std::endl;
     this->brain = new Brain();
 }
@@ -10,7 +10,7 @@ Cat::~Cat(void){
     delete this->brain;
 }
 
-Cat::Cat(Cat const &name) : Animal("Cat"){
+Cat::Cat(Cat const &name) : AAnimal("Cat"){
     std::cout << "Cat Copy Constructor called" << std::endl;
     this->brain = new Brain(*name.getBrain());
     *this = name;

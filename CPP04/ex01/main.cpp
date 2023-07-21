@@ -3,16 +3,11 @@
 #include "Dog.hpp"
 #include "Brain.hpp"
 
-#include <iostream>
-#include "Animal.hpp"
-#include "Cat.hpp"
-#include "Dog.hpp"
-
 int main() {
     const Animal* j = new Dog();
     const Animal* i = new Cat();
 
-    delete j; // should not create a leak
+    delete j;
     delete i;
 
     Dog basic;
@@ -28,8 +23,6 @@ int main() {
 
     Cat* cat = new Cat();
     cat->getBrain()->setIdea("Idea 1", 0);
-    std::cout << "aqui\n";
-    std::cout << "--------------------------------";
     cat->getBrain()->setIdea("Idea 2", 1);
 
     Cat* cat2 = new Cat();
