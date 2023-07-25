@@ -1,57 +1,34 @@
-#include "Bureaucrat.hpp"
+#include "Form.hpp"
 
 int main() {
     try {
-        Bureaucrat best("Best", 0);
+        // Criando burocratas
+        Bureaucrat bureaucrat1("Alice", 100);
+        Bureaucrat bureaucrat2("Bob", 50);
+
+        // Criando formas
+        Form form1("Tax Form", 75, 100);
+        Form form2("Approval Form", 40, 60);
+
+        // Imprimindo informações iniciais das formas e dos burocratas
+        std::cout << "Initial state of forms and bureaucrats:" << std::endl;
+        std::cout << form1 << std::endl;
+        std::cout << form2 << std::endl;
+        std::cout << bureaucrat1 << std::endl;
+        std::cout << bureaucrat2 << std::endl;
+        std::cout << std::endl;
+
+        // Tentando assinar as formas pelos burocratas
+        std::cout << "Trying to sign the forms:" << std::endl;
+        bureaucrat1.signForm(form1);
+        bureaucrat2.signForm(form2);
+
+        // Imprimindo o estado das formas após a tentativa de assinatura
+        std::cout << "State of forms after signing attempt:" << std::endl;
+        std::cout << form1 << std::endl;
+        std::cout << form2 << std::endl;
     } catch (std::exception& e) {
-        std::cout << e.what() << std::endl;
-    }
-
-    try {
-        Bureaucrat worst("Worst", 200);
-    } catch (std::exception& e) {
-        std::cout << e.what() << std::endl;
-    }
-
-    Bureaucrat high("High", 1);
-    Bureaucrat low("Low", 150);
-    Bureaucrat medium("Medium", 75);
-
-    std::cout << std::endl;
-    std::cout << "Bureaucrat grade:" << std::endl;
-    std::cout << high;
-    std::cout << medium;
-    std::cout << low;
-    std::cout << std::endl;
-
-    std::cout << "Testing grade too high:" << std::endl;
-    try {
-        high.incrementGrade();
-    } catch (std::exception& e) {
-        std::cerr << e.what() << "\n";
-    }
-
-    std::cout << "Testing grade too low:" << std::endl;
-    try {
-        low.decrementGrade();
-    } catch (std::exception& e) {
-        std::cerr << e.what() << "\n";
-    }
-
-    std::cout << "Functional decrement:" << std::endl;
-    try {
-        medium.decrementGrade();
-        std::cout << medium;
-    } catch (std::exception& e) {
-        std::cerr << e.what() << "\n";
-    }
-
-    std::cout << "Functional increment:" << std::endl;
-    try {
-        medium.incrementGrade();
-        std::cout << medium;
-    } catch (std::exception& e) {
-        std::cerr << e.what() << "\n";
+        std::cerr << "Error: " << e.what() << std::endl;
     }
 
     return 0;
