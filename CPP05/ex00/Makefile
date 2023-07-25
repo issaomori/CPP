@@ -1,10 +1,7 @@
-NAME = AAnimal
+NAME = Bureaucrat
 
 SRCS=	main.cpp\
-		AAnimal.cpp\
-		Cat.cpp\
-		Dog.cpp\
-		Brain.cpp
+		Bureaucrat.cpp\
 
 OBJS=	$(SRCS:.cpp=.o)
 
