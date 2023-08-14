@@ -1,7 +1,7 @@
-NAME = Converter
+NAME = Serializer
 
 SRCS=	main.cpp\
-		Converter.cpp
+		Data.cpp
 
 OBJS=	$(SRCS:.cpp=.o)
 

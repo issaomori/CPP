@@ -1,14 +1,13 @@
-NAME = Converter
+NAME = Whatever
 
-SRCS=	main.cpp\
-		Converter.cpp
+SRCS=	main.cpp
 
 OBJS=	$(SRCS:.cpp=.o)
 
 RM=		rm -rf
 
 CC=	c++
-FLAGS =		-Wall -Werror -Wextra -std=c++98 -pedantic-errors -g3
+FLAGS =		-Wall -Werror -Wextra -std=c++98 -pedantic-errors
 
 all:	$(NAME)
 

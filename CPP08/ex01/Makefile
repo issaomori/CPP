@@ -1,14 +1,14 @@
-NAME = Converter
+NAME = Span
 
 SRCS=	main.cpp\
-		Converter.cpp
+		Span.cpp
 
 OBJS=	$(SRCS:.cpp=.o)
 
 RM=		rm -rf
 
 CC=	c++
-FLAGS =		-Wall -Werror -Wextra -std=c++98 -pedantic-errors -g3
+FLAGS =		-Wall -Werror -Wextra -std=c++98 -pedantic-errors
 
 all:	$(NAME)
 

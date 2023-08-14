@@ -1,7 +1,7 @@
-NAME = Converter
+NAME = Base
 
 SRCS=	main.cpp\
-		Converter.cpp
+		Base.cpp
 
 OBJS=	$(SRCS:.cpp=.o)
 
