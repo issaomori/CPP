@@ -9,16 +9,18 @@ PhoneBook::~PhoneBook(){}
 void PhoneBook::addContacts(){
 	Contact buffer;
 
-	this->contacts[this->i].defContactInfo(buffer);
-	this->contacts[this->i] = buffer;
-	std::cout << this->contacts[i].getFirstName() << std::endl;	
-	std::cout << this->contacts[i].getlastName() << std::endl;	
-	std::cout << this->contacts[i].getnickName() << std::endl;
-	this->i++;
-	if (this->contactsCount < 8)
-		this->contactsCount++;
-	if (this->i == 8)
-		this->i = 0;
+	 buffer.defContactInfo(buffer); // Preenche o buffer
+    if (!buffer.isEmpty()) { // Verifica se o buffer não está vazio
+        this->contacts[this->i] = buffer;
+        std::cout << this->contacts[this->i].getFirstName() << std::endl;    
+        std::cout << this->contacts[this->i].getlastName() << std::endl;    
+        std::cout << this->contacts[this->i].getnickName() << std::endl;
+        if (this->contactsCount < 8)
+            this->contactsCount++;
+        this->i++;
+        if (this->i == 8)
+            this->i = 0;
+	}
 }
 
 void PhoneBook::searchContacts(){
@@ -47,10 +49,10 @@ void PhoneBook::searchContacts(){
 	int number;
 	std::cin >> number;
 
+	std::cout << number << std::endl;
 	if (number < 0 || number >= this->contactsCount){
 		std::cout << "Invalid number" << std::endl;
 	}
 	else
 		this->contacts[number].showContactInfo();
-	// std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }

@@ -4,45 +4,47 @@ Contact::Contact(){}
 
 void Contact::defContactInfo(Contact &buffer){
 
+	Contact aux;
 	std::cout << "Enter first name: ";
-	std::getline(std::cin, buffer.firstName);
-	if (buffer.firstName == ""){
+	std::getline(std::cin, aux.firstName);
+	if (aux.firstName.empty()){
 		std::cout << "Empty first name." << std::endl;
 		return ;
 	}
 
 	std::cout << "Enter last name: ";
-	std::getline(std::cin, buffer.lastName);
-	if (buffer.lastName == ""){
+	std::getline(std::cin, aux.lastName);
+	if (aux.lastName.empty()){
 		std::cout << "Empty last name." << std::endl;
 		return ;
 	}
 
 	std::cout << "Enter nickname: ";
-	std::getline(std::cin, buffer.nickName);
-	if (buffer.nickName == ""){
+	std::getline(std::cin, aux.nickName);
+	if (aux.nickName.empty()){
 		std::cout << "Empty nickname." << std::endl;
 		return ;
 	}
-
 	std::cout << "Enter phone number: ";
-	std::getline(std::cin, buffer.phone);
-	if (!buffer.phone.find_first_not_of("0123456789")){
+	std::getline(std::cin, aux.phone);
+	if (!isNumeric(aux.phone)){
 
 		std::cout << "Invalid number phone." << std::endl;
 		return ;
 	}
-	else if (buffer.phone == ""){
+	else if (aux.phone == ""){
 		std::cout << "Empty number phone." << std::endl;
 		return ;
 	}
 
 	std::cout << "Enter darkest secret: ";
-	std::getline(std::cin, buffer.secret);
-	if (buffer.secret == ""){
+	std::getline(std::cin, aux.secret);
+	if (aux.secret == ""){
 		std::cout << "Empty darkest secret." << std::endl;
 		return ;
 	}
+	buffer = aux;
+
 }
 
 
@@ -62,4 +64,16 @@ std::string Contact::getlastName(){
 }
 std::string Contact::getnickName(){
 	return this->nickName;
+}
+
+bool Contact::isNumeric(const std::string &str){
+	for (std::string::size_type i = 0; i < str.length(); i++){
+		if (!isdigit(str[i]))
+			return false;
+	}
+	return true;
+}
+
+bool Contact::isEmpty() const {
+    return firstName.empty() && lastName.empty() && nickName.empty() && phone.empty() && secret.empty();
 }

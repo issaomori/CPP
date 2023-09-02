@@ -20,6 +20,8 @@ class Contact{
 	std::string getFirstName();
 	std::string getlastName();
 	std::string getnickName();
+	bool isNumeric(const std::string &str);
+	bool isEmpty() const ;
 };
 
 #endif

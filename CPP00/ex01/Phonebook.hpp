@@ -13,11 +13,11 @@ class PhoneBook{
 	int contactsCount;
 
 	public:
-	PhoneBook();
-	~PhoneBook();
+		PhoneBook();
+		~PhoneBook();
 
-	void addContacts();
-	void searchContacts();
+		void addContacts();
+		void searchContacts();
 };
 
 #endif
