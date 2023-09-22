@@ -23,6 +23,19 @@ int main() {
         bureaucrat1.signForm(form1);
         bureaucrat2.signForm(form2);
 
+        std::cout << std::endl;
+        std::cout << "Testing beSign:" << std::endl;
+		try
+		{
+			form1.beSigned(bureaucrat2);
+			std::cout << form1 << std::endl;
+		}
+		catch(const std::exception& e)
+		{
+			std::cerr << e.what() << std::endl;
+		}
+
+        std::cout << std::endl;
         // Imprimindo o estado das formas após a tentativa de assinatura
         std::cout << "State of forms after signing attempt:" << std::endl;
         std::cout << form1 << std::endl;

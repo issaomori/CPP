@@ -1,20 +1,16 @@
 #include "Converter.hpp"
 
-int main() {
-    try {
-        std::string input;
 
-        std::cout << "Enter an input: ";
-        std::cin >> input;
 
-        Converter converter(input);
-
-        converter.convertPrint();
-    } catch (const std::exception &ex) {
-        std::cerr << "Error: " << ex.what() << std::endl;
+int main(int argc, char *argv[]) {
+    if (argc != 2) {
+        std::cerr << "Usage: " << argv[0] << " <input>" << std::endl;
         return 1;
     }
 
+    std::string input = argv[1];
+    Converter converter(input);
+    converter.printConversion();
+
     return 0;
 }
-
