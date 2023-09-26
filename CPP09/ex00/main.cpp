@@ -1,7 +1,5 @@
 #include "BitCoinExchange.hpp"
 
-#include "BitCoinExchange.hpp" // Inclua o cabeçalho que declara a classe BitCoinExchange
-
 // int main(int argc, char **argv) {
 //     if (argc != 2) {
 //         std::cerr << "Usage: " << argv[0] << " input.txt" << std::endl;
@@ -40,21 +38,36 @@
 //     return 0;
 // }
 
-int main(int argc, char** argv) {
-    std::map<std::string, float> csv;
+// int main(int argc, char **argv) {
+//     BitCoinExchange exchange;
+//     std::map<std::string, float> csv;
 
-    BitCoinExchange exchange;
-    if (argc != 2) {
-        std::cout << "Wrong use of this program. Check subject" << std::endl;
-        return (1);
+//     if (argc != 2) {
+//         std::cout << "Wrong use of this program. Check subject" << std::endl;
+//         return 1;
+//     }
+//     if (!exchange.canOpen(argv[1])) {
+//         std::cout << "Could not open " << argv[1] << std::endl;
+//         return 1;
+//     }
+//     if (!exchange.parseMap(argv[1], csv))
+//         return 1;
+
+//     exchange.calculate(argv[1]);
+//     return 0;
+// }
+
+
+int main(int ac, char **av)
+{
+    (void)av;
+    if (ac != 2)
+    {
+        std::cout << "Usage: ./bitcoin [filename]" << std::endl;
+        return 1;
     }
-    std::ifstream file;
-    if (exchange.openFile(file, argv[1]) != 0) {
-        std::cout << "Could not open " << argv[1] << std::endl;
-        return (1);
-    }
-    if (!exchange.readCSVData(csv))
-        return (1);
-    exchange.calculate(csv, argv[1]);
-    return (0);
+    BitcoinExchange exchange;
+    exchange.LoadData();
+    exchange.InputHandler(av[1]);
+    return 0;
 }

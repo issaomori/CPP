@@ -1,35 +1,31 @@
 #ifndef BITCOINEXCHANGE_HPP
 #define BITCOINEXCHANGE_HPP
 
+#include <iostream>  
 #include <string>
-#include <map>
+#include <climits>
+#include <sstream>
+#include <algorithm>
+#include <iomanip>
 #include <fstream>
-#include <iostream>
+#include <map>
+#include <cstdlib>
 
-class BitCoinExchange {
-
+class BitcoinExchange
+{
     private:
-        std::string dataFileName;
-        std::map<std::string, float> csvData;
-
-        float convertToFloat(const std::string& value);
-        std::pair<std::string, float> makePair(const std::string& pair);
-        bool isValidYear(int year);
-        bool isValidMonth(int month);
-        bool isValidDay(int day);
-        bool isValidDateFormat(const std::string& date);
-        bool isValidValue(float value);
-        void printValue(const std::map<std::string, float>& dataMap, const std::string& inputStr);
-
+        std::map<std::string, double> db;
     public:
-        BitCoinExchange();
-        ~BitCoinExchange();
-        bool readCSVData(std::map<std::string, float>& dataMap);
-        int openFile(std::ifstream& file, const std::string& fileName);
-        BitCoinExchange(const std::string& dataFile);
-        bool parseData();
-        void calculate(const std::map<std::string, float>& csv, const std::string& file);
-        std::string trim(const std::string& str);
+        BitcoinExchange();
+        ~BitcoinExchange();
+        BitcoinExchange(const BitcoinExchange &other);
+        BitcoinExchange &operator=(const BitcoinExchange &other);
+        void LoadData();
+        void PrintData();
+        void InputHandler(std::string filename);
+        int CountWords(std::string line);
+        int ParseInput(int year, int month, int day, double value, std::string line);
+        void PrintExchangeInfo(std::string input, double value);
 };
 
-#endif 
+#endif

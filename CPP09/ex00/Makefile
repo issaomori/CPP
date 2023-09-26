@@ -9,7 +9,7 @@ OBJS=	$(SRCS:.cpp=.o)
 RM=		rm -rf
 
 CC=	c++
-FLAGS =		-Wall -Werror -Wextra -std=c++98 -pedantic-errors
+FLAGS =		-Wall -Werror -Wextra -std=c++98 -pedantic-errors -g3
 
 all:	$(NAME)
 
