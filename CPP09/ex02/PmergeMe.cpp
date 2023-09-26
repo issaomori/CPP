@@ -21,8 +21,8 @@ int compare(int x, int y) {
     return 0;
 }
 
-int PmergeMe::jacobsthal(int number) {
-    return round((std::pow(2, number) + std::pow(-1, number - 1)) / 3);
+int PmergeMe::jacobsthal(int n) {
+    return round((std::pow(2, n) + std::pow(-1, n - 1)) / 3);
 }
 
 std::vector<int> PmergeMe::pendingElementOrder(int number) {
@@ -31,15 +31,15 @@ std::vector<int> PmergeMe::pendingElementOrder(int number) {
         response.push_back(jacobsthal(i));
     }
     response.push_back(number);
-    std::vector<int> order;
+    std::vector<int> output_vector;
     for (size_t i = 1; i < response.size(); ++i) {
-        int a = response[i - 1];
-        int b = response[i];
-        for (int j = b - 1; j >= a; --j) {
-            order.push_back(j);
+        int start_range = response[i - 1];
+        int end_range = response[i];
+        for (int j = end_range - 1; j >= start_range; --j) {
+            output_vector.push_back(j);
         }
     }
-    return order;
+    return output_vector;
 }
 
 std::deque<int> PmergeMe::pendingElementOrder_deque(int number) {
@@ -68,121 +68,115 @@ std::deque<int> PmergeMe::pendingElementOrder_deque(int number) {
     return output_deque;
 }
 
-int PmergeMe::binarySearchInsertionPoint(Comparator comp, int n, const std::vector<int>& coll, int lowerBound, int upperBound) {
-    if (lowerBound > upperBound) {
-        return lowerBound;
-    } else {
-        int midIndex = (lowerBound + upperBound) / 2;
-        int compResult = comp(n, coll[midIndex]);
-        if (compResult == 1) {
-            return binarySearchInsertionPoint(comp, n, coll, midIndex + 1, upperBound);
-        } else if (compResult == 0) {
-            return midIndex;
+int PmergeMe::binarySearchInsertionPoint(Comparator comp, int value, const std::vector<int>& collection, int startIdx, int endIdx) {
+    if (startIdx <= endIdx) {
+        int midIdx = (startIdx + endIdx) / 2;
+        int compResult = comp(value, collection[midIdx]);
+
+        if (compResult == 0) {
+            return midIdx;
+        } else if (compResult == -1) {
+            return binarySearchInsertionPoint(comp, value, collection, startIdx, midIdx - 1);
         } else {
-            return binarySearchInsertionPoint(comp, n, coll, lowerBound, midIndex - 1);
+            return binarySearchInsertionPoint(comp, value, collection, midIdx + 1, endIdx);
         }
+    } else {
+        return startIdx;
     }
 }
 
-// int PmergeMe::binarySearchInsertionPoint(Comparator comp, int value, const std::vector<int>& collection, int low, int high) {
-//     // Ensure low is not greater than high, indicating the search is done.
-//     if (low > high) {
-//         return low;
-//     } else {
-//         // Calculate the middle index using integer division.
-//         int midIndex = (low + high) / 2;
-        
-//         // Compare the value with the element at midIndex.
-//         int compResult = comp(value, collection[midIndex]);
-        
-//         if (compResult == 1) {
-//             // Value is greater, search the right half.
-//             return binarySearchInsertionPoint(comp, value, collection, midIndex + 1, high);
-//         } else if (compResult == 0) {
-//             // Value is equal to the element at midIndex.
-//             return midIndex;
-//         } else {
-//             // Value is smaller, search the left half.
-//             return binarySearchInsertionPoint(comp, value, collection, low, midIndex - 1);
-//         }
-//     }
-// }
+int PmergeMe::binarySearchInsertionPoint(Comparator comp, int value, const std::deque<int>& collection, int startIdx, int endIdx) {
+    if (startIdx <= endIdx) {
+        int midIdx = (startIdx + endIdx) / 2;
+        int compResult = comp(value, collection[midIdx]);
 
-std::vector<int> PmergeMe::mainChainUntil(int aIndex, const std::vector<int>& mainChain, const std::vector<int>& aPositions) {
-    int end = aPositions[aIndex];
+        if (compResult == 0) {
+            return midIdx;
+        } else if (compResult == -1) {
+            return binarySearchInsertionPoint(comp, value, collection, startIdx, midIdx - 1);
+        } else {
+            return binarySearchInsertionPoint(comp, value, collection, midIdx + 1, endIdx);
+        }
+    } else {
+        return startIdx;
+    }
+}
+
+std::vector<int> PmergeMe::mainChainUntil(int p_index, const std::vector<int>& mainChain, const std::vector<int>& position_list) {
+    int end = position_list[p_index];
     return std::vector<int>(mainChain.begin(), mainChain.begin() + end);
 }
 
-void PmergeMe::binaryInsertLambda(int bIndex, Comparator comp, std::vector<int>& mainChain, std::vector<int>& aPositions, std::vector<int>& pendingElements) {
-    int n = pendingElements[bIndex];
-    int insertIndex = binarySearchInsertionPoint(comp, n, mainChain, 0, mainChainUntil(bIndex, mainChain, aPositions).size() - 1);
-    for (size_t i = 0; i < aPositions.size(); ++i) {
-        if (aPositions[i] >= insertIndex) {
-            ++aPositions[i];
+void PmergeMe::binaryInsertLambda(int element_index, Comparator compare, std::vector<int>& mainChain, std::vector<int>& position_list, std::vector<int>& elements_to_insert) {
+    int n = elements_to_insert[element_index];
+    int insertIndex = binarySearchInsertionPoint(compare, n, mainChain, 0, mainChainUntil(element_index, mainChain, position_list).size() - 1);
+    for (size_t i = 0; i < position_list.size(); ++i) {
+        if (position_list[i] >= insertIndex) {
+            ++position_list[i];
         }
     }
     mainChain.insert(mainChain.begin() + insertIndex, n);
 }
 
-std::vector<int> PmergeMe::binaryInsert(Comparator comp, int n, const std::vector<int>& coll) {
+std::vector<int> PmergeMe::binaryInsert(Comparator compare, int number, const std::vector<int>& coll) {
     std::vector<int> newColl = coll;
-    int insertIndex = binarySearchInsertionPoint(comp, n, coll, 0, coll.size() - 1);
-    newColl.insert(newColl.begin() + insertIndex, n);
+    int insertIndex = binarySearchInsertionPoint(compare, number, coll, 0, coll.size() - 1);
+    newColl.insert(newColl.begin() + insertIndex, number);
     return newColl;
 }
 
-std::deque<int> PmergeMe::binaryInsert(Comparator comp, int n, const std::deque<int>& coll) {
+std::deque<int> PmergeMe::binaryInsert(Comparator compare, int number, const std::deque<int>& coll) {
     std::deque<int> newColl = coll;
-    int insertIndex = binarySearchInsertionPoint(comp, n, coll, 0, coll.size() - 1);
-    newColl.insert(newColl.begin() + insertIndex, n);
+    int insertIndex = binarySearchInsertionPoint(compare, number, coll, 0, coll.size() - 1);
+    newColl.insert(newColl.begin() + insertIndex, number);
     return newColl;
 }
 
-std::vector<int> PmergeMe::mergeInsertionSort(Comparator comp, const std::vector<int>& coll) {
-    if (coll.size() < 2) {
-        return coll;
+std::vector<int> PmergeMe::mergeInsertionSort(Comparator compare, const std::vector<int>& collection) {
+    if (collection.size() < 2) {
+        return collection;
     } else {
-        std::vector<int> mainChain;
-        std::vector<int> pendingElements;
-        
-        for (size_t i = 0; i < coll.size(); i++) {
-            int n = coll[i];
-            size_t insertIndex = binarySearchInsertionPoint(comp, n, mainChain, 0, mainChain.size() - 1);
-            mainChain.insert(mainChain.begin() + insertIndex, n);
-            pendingElements.push_back(n);
+        std::vector<int> sortedCollection;
+        std::vector<int> elementsToInsert;
+
+        for (size_t i = 0; i < collection.size(); i++) {
+            int element = collection[i];
+            size_t insertionPoint = binarySearchInsertionPoint(compare, element, sortedCollection, 0, sortedCollection.size() - 1);
+            sortedCollection.insert(sortedCollection.begin() + insertionPoint, element);
+            elementsToInsert.push_back(element);
         }
 
-        std::vector<int> aPositions(mainChain.size());
-        for (size_t i = 0; i < mainChain.size(); ++i) {
-            aPositions[i] = i;
+        std::vector<int> positions(sortedCollection.size());
+        for (size_t i = 0; i < sortedCollection.size(); ++i) {
+            positions[i] = i;
         }
 
-        std::vector<int> order = pendingElementOrder(pendingElements.size());
+        std::vector<int> order = pendingElementOrder(elementsToInsert.size());
         for (size_t i = 0; i < order.size(); ++i) {
-            binaryInsertLambda(order[i], comp, mainChain, aPositions, pendingElements);
+            binaryInsertLambda(order[i], compare, sortedCollection, positions, elementsToInsert);
         }
 
-        return mainChain;
+        return sortedCollection;
     }
 }
 
-std::deque<int> PmergeMe::mainChainUntilFunction(int aIndex, const std::deque<int>& mainChain, const std::deque<int>& aPositions) {
-    int end = aPositions[aIndex];
+std::deque<int> PmergeMe::mainChainUntilFunction(int p_index, const std::deque<int>& mainChain, const std::deque<int>& positions_list) {
+    int end = positions_list[p_index];
     return std::deque<int>(mainChain.begin(), mainChain.begin() + end);
 }
 
-void PmergeMe::binaryInsertLambda(int bIndex, Comparator comp, std::deque<int>& mainChain, std::deque<int>& aPositions, std::deque<int>& pendingElements) {
-    int n = pendingElements[bIndex];
-    int insertIndex = binarySearchInsertionPoint(comp, n, mainChain, 0, mainChainUntilFunction(bIndex, mainChain, aPositions).size() - 1);
-    for (size_t i = 0; i < aPositions.size(); ++i) {
-        if (aPositions[i] >= insertIndex) {
-            ++aPositions[i];
+void PmergeMe::binaryInsertLambda(int element_index, Comparator compare, std::deque<int>& mainChain, std::deque<int>& positions_list, std::deque<int>& pendingElements) {
+    int n = pendingElements[element_index];
+    int insertIndex = binarySearchInsertionPoint(compare, n, mainChain, 0, mainChainUntilFunction(element_index, mainChain, positions_list).size() - 1);
+    for (size_t i = 0; i < positions_list.size(); ++i) {
+        if (positions_list[i] >= insertIndex) {
+            ++positions_list[i];
         }
     }
     mainChain.insert(mainChain.begin() + insertIndex, n);
 }
 
-std::deque<int> PmergeMe::mergeInsertionSort_deque(Comparator comp, const std::deque<int>& coll) {
+std::deque<int> PmergeMe::mergeInsertionSort_deque(Comparator compare, const std::deque<int>& coll) {
     if (coll.size() < 2) {
         return coll;
     } else {
@@ -191,21 +185,20 @@ std::deque<int> PmergeMe::mergeInsertionSort_deque(Comparator comp, const std::d
 
         for (size_t i = 0; i < coll.size(); i++) {
             int n = coll[i];
-            size_t insertIndex = binarySearchInsertionPoint(comp, n, mainChain, 0, mainChain.size() - 1);
+            size_t insertIndex = binarySearchInsertionPoint(compare, n, mainChain, 0, mainChain.size() - 1);
             mainChain.insert(mainChain.begin() + insertIndex, n);
             pendingElements.push_back(n);
         }
 
-        std::deque<int> aPositions(mainChain.size());
+        std::deque<int> positions_list(mainChain.size());
         for (size_t i = 0; i < mainChain.size(); ++i) {
-            aPositions[i] = i;
+            positions_list[i] = i;
         }
 
         std::deque<int> order = pendingElementOrder_deque(pendingElements.size());
         for (size_t i = 0; i < order.size(); ++i) {
-            binaryInsertLambda(order[i], comp, mainChain, aPositions, pendingElements);
+            binaryInsertLambda(order[i], compare, mainChain, positions_list, pendingElements);
         }
-
         return mainChain;
     }
 }
